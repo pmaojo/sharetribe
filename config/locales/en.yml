@@ -311,6 +311,7 @@ en:
         invalid_post_listing_button_label: "Please provide a valid text for \"Post a new listing\" button"
       transactions:
         export_all_as_csv: "Export all as CSV"
+        processing_export: "Processing export to CSV..."
         transactions: "View transactions"
         headers:
           conversation: "Conversation thread"
@@ -705,29 +706,22 @@ en:
     what_is_this: "What's this?"
     removed_user: "Removed user"
     payment_fee_info:
-      title: "Payment processing fee"
-      title_paypal: "PayPal's processing fee"
+      title: "Commission and Payment processing fee"
       stripe: Stripe
       paypal: PayPal
-      info: "Payments in %{service_name} are processed by either Stripe or PayPal. They both charge a fee from each payment."
+      info: "Payments in %{service_name} are processed by either Stripe (credit/debit card) or PayPal. %{service_name} will charge a commission depending on the payment gateway."
     paypal_fee_info:
       title: "PayPal's payment processing fee"
       body_text: |-
-          For PayPal payments, %{service_name} charges a commission of %{paypal_commission}%. PayPal's fees are not included in this commission, so in addition to %{service_name} commission, you also need to pay PayPal's fees from each payment processed by PayPal. PayPal's fee is between 2% and 5% of the total sales price, depending on your monthly sales volume and the country of residence of the buyer. In general, domestic purchases have lower fees than international ones, and higher monthly sales give you a discount on fees.
+          For PayPal payments, %{service_name} charges a commission of %{paypal_commission}%. The minimum transaction fee per transaction is %{minimum_transaction_fee}. PayPal's fees are not included in this commission, so in addition to %{service_name} commission, you will also pay PayPal's fees for each. PayPal's fee is between 2% and 5% of the total sales price, depending on your monthly sales volume and the country of residence of the buyer. In general, domestic purchases have lower fees than international ones, and higher monthly sales give you a discount on fees.
           You can see the exact fees by logging in to your PayPal account and going %{link_to_paypal}. After each purchase you will get a receipt displaying the exact fee.
       body_text_accept: |-
           This transaction is processed by PayPal. PayPal charges a processing fee from each payment. This fee is between 2% and 5% of the total sales price, depending on your monthly sales volume and the country of residence of the buyer. In general, domestic purchases have lower fees than international ones, and higher monthly sales give you a discount on fees.
           You can see the exact fees by logging in to your PayPal account and going %{link_to_paypal}. After each purchase you will get a receipt displaying the exact fee.
       link_to_paypal_text: here
-    paypal_only_fee_info:
-      title: "PayPal's payment processing fee"
-      body_text: |-
-          Payments in %{service_name} are processed by PayPal. PayPal charges a processing fee from each payment. This fee is between 2% and 5% of the total sales price, depending on your monthly sales volume and the country of residence of the buyer. In general, domestic purchases have lower fees than international ones, and higher monthly sales give you a discount on fees.
-          You can see the exact fees by logging in to your PayPal account and going %{link_to_paypal}. After each purchase you will get a receipt displaying the exact fee.
-      link_to_paypal_text: here
     stripe_fee_info:
       title: "Stripe's payment processing fee"
-      body_text: "For Stripe payments, %{service_name} charges a commission of %{stripe_commission}%. Stripe's fees are included in this commission."
+      body_text: "For Stripe payments, %{service_name} charges a commission of %{stripe_commission}%. The minimum commission per transaction is %{minimum_transaction_fee}. Stripe's fees are included in this commission."
       link_to_stripe_text: here
   conversations:
     accept:
@@ -800,6 +794,9 @@ en:
       canceled_offer: "canceled the offer"
       paid: "paid %{sum}"
       payment_preauthorized: "Payment authorized: %{sum}"
+      stripe:
+        held_payment: "Accepted the request. Payment for %{sum} is being held by %{service_name} until the order is marked as completed."
+        confirmed_request: "Marked the order as completed. The payment has now been transferred to %{author_name} bank account or will be transferred soon."
     new:
       message: Message
       message_to: "Message to %{author_name}"
@@ -872,6 +869,8 @@ en:
           intl: "Waiting for you to accept the PayPal payment"
           unknown_reason: "Payment is pending. Log in to your PayPal account to see more details."
           verify: "Waiting for you to verify your PayPal account"
+      stripe:
+        waiting_confirmation_from_requester: "Waiting for %{requester_name} to mark the order completed. Once the order is marked as completed, the payment will be released to your bank account."
     status_link:
       accept_offer: "Accept offer"
       accept_request: "Accept request"
@@ -941,6 +940,8 @@ en:
       has_marked_request_as_canceled: "%{other_party_full_name} has canceled the order about '%{request}'. You can still give feedback to %{other_party_given_name}."
       giving_feedback_is_good_idea: "Giving feedback is always a good idea. If everything went well, you should let others know that %{other_party_given_name} can be trusted. If there were any problems, it's good to mention those as well."
       give_feedback_to: "Give feedback to %{other_party_given_name}"
+      stripe:
+        has_marked_request_as_confirmed: "%{other_party_full_name} has marked the order about '%{request}' completed. The payment for this transaction has now been released to your bank account. You can now give feedback to %{other_party_given_name}."
     transaction_automatically_confirmed:
       subject: "Order automatically completed - remember to give feedback"
       we_have_marked_request_as_confirmed: "We have marked the order about '%{request}' completed. The order was automatically completed because %{days_passed} days have passed since the request was accepted."
@@ -1015,6 +1016,8 @@ en:
       price_per_unit_type: "Price per %{unit_type}"
       quantity: "Quantity:"
       you_have_received_new_payment: "You have been paid <b>%{payment_sum}</b> for <b>%{listing_title}</b> by %{payer_full_name}. Here is your receipt."
+      stripe:
+        you_have_received_new_payment: "The amount of <b>%{payment_sum}</b> has been paid for <b>%{listing_title}</b> by %{payer_full_name}. The money is being held by %{service_name} until the order is marked as completed. Here is your receipt."
     payment_receipt_to_payer:
       receipt_of_payment: "Receipt of payment"
       you_have_made_new_payment: "You have paid <b>%{payment_sum}</b> for <b>%{listing_title}</b> to %{recipient_full_name}. Here is a receipt of the payment."
@@ -1052,6 +1055,8 @@ en:
       paypal_gateway_fee: "PayPal's fee:"
       money_will_be_transferred: "The money will be transferred to %{recipient_name} when a) you have marked the request completed or b) %{automatic_confirmation_days} days have passed since you paid."
       listing_per_unit_title: "%{title}, per %{unit_type}"
+      stripe:
+        you_have_made_new_payment: "You have paid <b>%{payment_sum}</b> for <b>%{listing_title}</b>. The money is being held by %{service_name} and will be released to %{recipient_full_name} once you mark the order as completed. Here is a receipt of the payment."
     new_testimonial:
       has_given_you_feedback_in_kassi: "%{name} has given you feedback in %{service_name}"
       you_can_give_feedback_to: "You haven't yet given feedback to %{name}."
@@ -1085,7 +1090,7 @@ en:
     transaction_preauthorized:
       subject: "%{requester} is interested and has authorized payment for %{listing_title} published in %{service_name}"
       transaction_requested_by_user: "Great news! %{requester} is interested in \"%{listing_title}\" and has authorized payment for this listing."
-      you_have_time_to_accept: "You need to accept or reject the request within %{payment_expires_in}. If you accept within this timeframe, the payment will go through. If you don't accept, the request will be automatically rejected and you will not get paid."
+      you_have_time_to_accept: "You need to accept or reject the request within %{payment_expires_in}."
       if_you_do_accept: "If you accept the request within this timeframe, you will receive the money immediately to your account."
       if_you_do_accept_stripe: "If you accept the request within this timeframe, the payment will go through. You will receive the money directly to your bank account after you have delivered %{listing_title} to %{requester}."
       if_you_do_not_accept: "If you reject the request or don't accept it within this timeframe, the transaction will be automatically cancelled, %{requester} will not be charged and you will not get paid."
@@ -1637,11 +1642,8 @@ en:
         after_service_fee_you_will_get: "After %{service_name} and payment processor fees you will get %{sum_with_currency}"
         no_service_fee_you_will_get_paypal_text: "%{paypal_fee_info_link} will be deducted from the price."
         no_service_fee_you_will_get_payment_text: "%{payment_fee_info_link} will be deducted from the price."
-        after_service_fee_you_will_get_payment_text: "Once someone makes an order, %{service_name} fee (%{sum_with_currency}) and a %{payment_fee_info_link} will be deducted from the price."
-        after_service_fee_you_will_get_paypal_text: "Once someone makes an order, %{service_name} fee (%{sum_with_currency}) and a %{paypal_fee_info_link} will be deducted from the price."
-        after_service_fee_you_will_get_stripe_text: "Once someone makes an order, %{service_name} fee (%{sum_with_currency}) will be deducted from the price."
-        payment_fee_info_link_text: "payment processing fee"
-        paypal_fee_info_link_text: "PayPal's payment processing fee"
+        after_service_fee_you_will_get_payment_text: "Once someone makes an order, you'll receive this amount minus %{payment_fee_info_link}."
+        payment_fee_info_link_text: "%{service_name} fee and a payment processing fee"
         delivery: "Delivery method"
         shipping: Shipping
         shipping_price: "Shipping fee"
@@ -2305,6 +2307,8 @@ en:
           saving_failed: "We're not able to save availability changes. Try to reload the page."
         working_hours:
           required: required
+          overlaps: overlaps
+          covers: covers
       pricing_units:
         piece: piece
         hour: hour

@@ -509,6 +509,22 @@ CREATE TABLE `emails` (
   KEY `index_emails_on_confirmation_token` (`confirmation_token`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `export_task_results`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `export_task_results` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `status` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `file_file_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `file_content_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `file_file_size` int(11) DEFAULT NULL,
+  `file_updated_at` datetime DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `feature_flags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -753,6 +769,7 @@ CREATE TABLE `listings` (
   `shipping_price_cents` int(11) DEFAULT NULL,
   `shipping_price_additional_cents` int(11) DEFAULT NULL,
   `availability` varchar(32) DEFAULT 'none',
+  `per_hour_ready` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_listings_on_uuid` (`uuid`),
   KEY `index_listings_on_new_category_id` (`category_id`) USING BTREE,
@@ -2241,6 +2258,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20171129152027'),
 ('20171207073027'),
 ('20171207075640'),
-('20180108061342');
+('20180108061342'),
+('20180108093607');
 
 
