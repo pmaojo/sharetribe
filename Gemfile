@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.6.5'
+ruby '2.7.1'
 
 gem 'rails', '5.2.3'
 
@@ -17,7 +17,7 @@ gem 'jquery-rails', '~> 4.3.1'
 # gem 'heroku' install the Heroku toolbelt (https://toolbelt.heroku.com/) instead (as gem had some problems)
 gem "passenger", '~> 6.0.1'
 
-gem "mysql2", '0.4.10'
+gem "mysql2"
 gem "bcrypt", '3.1.12'
 gem 'haml', '~> 5.0.4'
 gem 'sass', '~> 3.4.24'
@@ -119,6 +119,11 @@ group :development, :staging do
 end
 
 group :development do
+  gem 'capistrano', '~> 3.7', '>= 3.7.1'
+    gem 'capistrano-rails', '~> 1.2'
+    gem 'capistrano-passenger', '~> 0.2.0'
+    gem 'capistrano-rbenv'
+
   gem 'rb-fsevent', '~> 0.9.8', require: false
   gem 'guard-rspec', '~> 4.7.3', require: false
   gem 'listen', '~> 3.1.5'
